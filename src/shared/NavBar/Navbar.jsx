@@ -1,13 +1,17 @@
 import { NavLink } from "react-router-dom";
 import logo from "../../Img/logo/ChefTrack.png";
 import shopping_card from "../../Img/shopping_Bag/shopping_Bag.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FiAlignJustify } from "react-icons/fi";
 import { BiUser } from "react-icons/bi";
 import { FaPhoneFlip } from "react-icons/fa6";
+import { AuthProvider } from "../../Auth/AuthContextProvider";
+import { LiaUserAltSlashSolid } from "react-icons/lia";
+import { _destroy } from "./../../../node_modules/sweetalert2/src/instanceMethods/_destroy";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user, logOut, loading } = useContext(AuthProvider);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const closeSidebar = () => setIsSidebarOpen(false);
@@ -23,6 +27,16 @@ const Navbar = () => {
 
   const getActiveClass = ({ isActive }) =>
     isActive ? "text-primary font-bold" : "";
+
+  const handleLogOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const navLinks = (
     <>
@@ -55,9 +69,20 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li className="hover:underline hover:bg-white">
-        <NavLink to="/login" className={getActiveClass} onClick={closeSidebar}>
-          Login
-        </NavLink>
+        {!loading &&
+          (user ? (
+            <button className="btn" onClick={handleLogOut}>
+              Logout
+            </button>
+          ) : (
+            <NavLink
+              to="/login"
+              className={getActiveClass}
+              onClick={closeSidebar}
+            >
+              Login
+            </NavLink>
+          ))}
       </li>
     </>
   );
@@ -123,12 +148,35 @@ const Navbar = () => {
             >
               <img src={shopping_card} alt="" />
             </NavLink>
-            <NavLink
-              to="/profile"
-              className="btn-sm  border md:p-[5.5px] p-1 border-gray-400 bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
-            >
-              <BiUser />
-            </NavLink>
+            {!loading &&
+              (user ? (
+                user.photoURL ? (
+                  <NavLink
+                    to="/profile"
+                    className="btn-sm bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+                  >
+                    <img
+                      src={user?.photoURL}
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full object-cover border border-gray-300"
+                    />
+                  </NavLink>
+                ) : (
+                  <NavLink
+                    to="/profile"
+                    className="btn-sm  border md:p-[5.5px] p-1 border-gray-400 bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+                  >
+                    <BiUser />
+                  </NavLink>
+                )
+              ) : (
+                <NavLink
+                  to="/profile"
+                  className="btn-sm  border md:p-[5.5px] p-1 border-gray-400 bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+                >
+                  <LiaUserAltSlashSolid />
+                </NavLink>
+              ))}
           </div>
         </nav>
 

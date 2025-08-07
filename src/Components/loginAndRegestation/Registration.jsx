@@ -1,6 +1,82 @@
 import { Link } from "react-router-dom";
 import registration_img from "../../Img/login_reg/img2.png";
+import { useContext } from "react";
+import { AuthProvider } from "../../Auth/AuthContextProvider";
+import Swal from "sweetalert2";
+import SwalAlart from "../../shared/SwalAlart/SwalAlart";
 const Registration = () => {
+  const {
+    createUserUseEmailAndPass,
+    signInWithEmailAndPass,
+    signInWithGoogle,
+  } = useContext(AuthProvider);
+  const handleRegistration = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const first_n = form.n1.value;
+    const last_n = form.n2.value;
+    const img = form.pic.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const value = {
+      name: first_n + " " + last_n,
+      first_n,
+      last_n,
+      img,
+      email,
+      password,
+    };
+
+    createUserUseEmailAndPass(email, password)
+      .then((result) => {
+        console.log(result.user.email);
+        if (result.user.email) {
+          SwalAlart({
+            type: 1,
+            title: "Success!",
+            text: "You're In! 🎉",
+            icon: "success",
+          });
+        }
+        signInWithEmailAndPass(email, password);
+        form.reset();
+      })
+      .catch((err) => {
+        SwalAlart({
+          type: 1,
+          title: "ERROR!!!",
+          text: err.message,
+          icon: "error",
+        });
+      });
+    // console.log(value);
+  };
+
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user.email);
+        if (result.user.email) {
+          SwalAlart({
+            type: 1,
+            title: "Success!",
+            text: "You're In! 🎉",
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        SwalAlart({
+          type: 1,
+          title: "ERROR!!!",
+          text: err.message,
+          icon: "error",
+        });
+      });
+  };
+
   return (
     <div className="flex items-center gap-5 justify-center mt-10 flex-col-reverse md:flex-row">
       <div className="lg:w-1/2 w-full p-1">
@@ -14,54 +90,72 @@ const Registration = () => {
           </h3>
           <div className="">
             <fieldset className="fieldset">
-              <div className="flex gap-5 w-full mb-3">
-                <div className=" w-full">
-                  <label className="label">First Name</label>
+              <form onSubmit={handleRegistration}>
+                <div className="flex gap-5 w-full mb-3">
+                  <div className=" w-full">
+                    <label className="label">First Name</label>
+                    <input
+                      type="text"
+                      name="n1"
+                      className="input w-full"
+                      placeholder="First name"
+                      required
+                    />
+                  </div>
+                  <div className=" w-full">
+                    <label className="label">Last Name</label>
+                    <input
+                      type="text"
+                      name="n2"
+                      className="input w-full"
+                      placeholder="last name"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className=" mb-3">
+                  <label className="label">Photo Url</label>
                   <input
-                    type="email"
+                    type="url"
+                    name="pic"
                     className="input w-full"
-                    placeholder="First name"
+                    placeholder="Email"
                   />
                 </div>
-                <div className=" w-full">
-                  <label className="label">Last Name</label>
+                <div className="mb-3">
+                  <label className="label">Email</label>
                   <input
                     type="email"
+                    name="email"
                     className="input w-full"
-                    placeholder="last name"
+                    placeholder="Email"
+                    required
                   />
                 </div>
-              </div>
-              <div className=" mb-3">
-                <label className="label">Photo Url</label>
-                <input
-                  type="email"
-                  className="input w-full"
-                  placeholder="Email"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="label">Email</label>
-                <input
-                  type="email"
-                  className="input w-full"
-                  placeholder="Email"
-                />
-              </div>
-              <div className="mb-3">
-                <label className="label">Password</label>
-                <input
-                  type="password "
-                  className="input w-full"
-                  placeholder="Password"
-                />
-              </div>
-              <button className="btn btn-primary mt-4">Registration</button>
-
+                <div className="mb-3">
+                  <label className="label">Password</label>
+                  <input
+                    type="password "
+                    name="password"
+                    className="input w-full"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary mt-4 w-full">
+                  Registration
+                </button>
+              </form>
+              <p className="font-bold my-2">
+                Or, continue with one of the following:
+              </p>
               <div className="flex mt-3 gap-2 flex-col md:flex-row">
                 {/* Google */}
                 <div className="w-full">
-                  <button className="btn bg-white text-black border-[#e5e5e5] w-full">
+                  <button
+                    onClick={handleSignInWithGoogle}
+                    className="btn bg-white text-black border-[#e5e5e5] w-full"
+                  >
                     <svg
                       aria-label="Google logo"
                       width="16"
