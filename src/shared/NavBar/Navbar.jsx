@@ -68,6 +68,17 @@ const Navbar = () => {
           My Profile
         </NavLink>
       </li>
+
+      <li className="hover:underline hover:bg-white">
+        <NavLink
+          to="/addFood"
+          className={getActiveClass}
+          onClick={closeSidebar}
+        >
+          Add Food
+        </NavLink>
+      </li>
+
       <li className="hover:underline hover:bg-white">
         {!loading &&
           (user ? (

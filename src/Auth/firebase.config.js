@@ -6,13 +6,14 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC41-9M4RtpxaU9wSn8WRCxhsIW2jtGIFI",
-  authDomain: "cheftrack-ee7fd.firebaseapp.com",
-  projectId: "cheftrack-ee7fd",
-  storageBucket: "cheftrack-ee7fd.firebasestorage.app",
-  messagingSenderId: "363446882076",
-  appId: "1:363446882076:web:c0c73c311f2bdcb59bf4d9",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

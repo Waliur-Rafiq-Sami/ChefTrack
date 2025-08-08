@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import login from "../../Img/login_reg/img.png";
 import { useContext } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
-import SwalAlart from "../../shared/SwalAlart/SwalAlart";
+import SwalAlart from "../../shared/SwalAllart/SwalAlart";
 const Login = () => {
   const { signInWithEmailAndPass, signInWithGoogle } = useContext(AuthProvider);
   const handleLogin = (e) => {

@@ -3,6 +3,7 @@ import Root from "../Components/Root/Root";
 import HomePage from "../Components/HomePage/HomePage";
 import Login from "../Components/loginAndRegestation/login";
 import Registration from "../Components/loginAndRegestation/Registration";
+import AddAfoodItemPage from "../Components/AddAfoodItemPage/AddAfoodItemPage";
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
       { path: "/", element: <HomePage></HomePage> },
       { path: "/login", element: <Login></Login> },
       { path: "/registration", element: <Registration></Registration> },
+      { path: "/addFood", element: <AddAfoodItemPage></AddAfoodItemPage> },
     ],
   },
 ]);

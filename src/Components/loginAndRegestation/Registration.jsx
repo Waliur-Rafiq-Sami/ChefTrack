@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import registration_img from "../../Img/login_reg/img2.png";
 import { useContext } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
-import Swal from "sweetalert2";
-import SwalAlart from "../../shared/SwalAlart/SwalAlart";
+import SwalAlart from "../../shared/SwalAllart/SwalAlart";
 const Registration = () => {
   const {
     createUserUseEmailAndPass,
