@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom"; // For navigation
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import img1 from "../../Img/specialItem/img1.jpg";
 import img2 from "../../Img/specialItem/img2.jpg";
 import img3 from "../../Img/specialItem/img3.jpg";
@@ -6,8 +7,8 @@ import img4 from "../../Img/specialItem/img4.jpg";
 import img5 from "../../Img/specialItem/img5.jpg";
 import img6 from "../../Img/specialItem/img6.jpg";
 import SingleCard from "../SingleCard/SingleCard";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
-// Data for the top 6 items
 const topFoodItems = [
   {
     id: 1,
@@ -61,7 +62,7 @@ const topFoodItems = [
   },
   {
     id: 7,
-    name: "Grilled Vegetable Platter",
+    name: "Extra Food Item 1",
     image: img6,
     category: "Vegetarian",
     price: 14.0,
@@ -69,7 +70,7 @@ const topFoodItems = [
   },
   {
     id: 8,
-    name: "Grilled Vegetable Platter",
+    name: "Extra Food Item 2",
     image: img6,
     category: "Vegetarian",
     price: 14.0,
@@ -79,17 +80,65 @@ const topFoodItems = [
 
 const SpecialItems = () => {
   const navigate = useNavigate();
+  const scrollContainerRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -360, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 360, behavior: "smooth" });
+    }
+  };
+
   const sortedItems = topFoodItems.sort(
     (a, b) => b.purchaseCount - a.purchaseCount
   );
-  const topSixItems = sortedItems.slice(0, 6);
+
   return (
-    <div className="my-5">
-      <div className="d-flex flex-wrap justify-content-center grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3">
-        {topSixItems.map((item) => (
-          <SingleCard key={item.id} food={item} navigate={navigate} />
+    <div className="relative my-5">
+      <div
+        ref={scrollContainerRef}
+        className="
+      grid grid-cols-1 sm:grid-cols-2 gap-4 p-2
+      md:flex md:overflow-x-auto md:scroll-smooth md:gap-4 md:p-2
+    "
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {sortedItems.map((item) => (
+          <div key={item.id} className="md:min-w-[350px]">
+            <SingleCard food={item} navigate={navigate} />
+          </div>
         ))}
+        <div className="flex justify-center items-center">
+          <button className="z-20 btn md:btn-lg btn-sm bg-[#20df1a] md:mt-2 md:mb-10 text-white font-bold md:text-lg">
+            Show All
+          </button>
+        </div>
       </div>
+
+      {/* Show scroll buttons only for md+ */}
+      <button
+        onClick={scrollLeft}
+        className="px-2 py-2 border-1 border-[#51d5ec71] rounded-full hover:bg-[#015516d8] bg-[#015516b4] text-[#3df56b] font-bold
+              hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 p-3 shadow-lg z-10"
+      >
+        <span>
+          <FaArrowLeft />
+        </span>
+      </button>
+
+      <button
+        onClick={scrollRight}
+        className="px-2 py-2 border-1border-[#51d5ec71] rounded-full hover:bg-[#015516d8] bg-[#015516b4] text-[#3df56b] font-bold hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 p-3  shadow-lg z-10"
+      >
+        <span>
+          <FaArrowRight />
+        </span>
+      </button>
     </div>
   );
 };
