@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./../../shared/NavBar/Navbar";
 import { useEffect } from "react";
+import Footer from "./../../shared/Footer/Footer";
 
 const Root = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const Root = () => {
       <div className="container mx-auto">
         <Outlet></Outlet>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
