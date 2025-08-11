@@ -25,6 +25,7 @@ const AuthContextProvider = ({ children }) => {
   //signInWithEmailAndPass
   const signInWithEmailAndPass = (e, p) => {
     setLoading(true);
+    console.log(e, p);
     return signInWithEmailAndPassword(auth, e, p);
   };
 

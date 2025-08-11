@@ -33,6 +33,7 @@ const Login = () => {
         });
       });
   };
+
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {

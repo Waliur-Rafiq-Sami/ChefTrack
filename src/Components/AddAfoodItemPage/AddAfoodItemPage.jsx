@@ -77,28 +77,27 @@ const AddAfoodItemPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center  p-4 font-sans">
+    <div className="flex items-center justify-center min-h-screen p-6 font-sans bg-gradient-to-br ">
       <div className="w-full max-w-2xl">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">
-            Add a New Food Item
+        <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/30">
+          <h2 className="md:text-3xl font-bold text-center text-indigo-700 mb-8">
+            🍽 Add a New Food Item
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Top row with Food Name, Image */}
+            {/* Top row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Food Name input */}
               <div>
                 <label
                   htmlFor="foodName"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Food Name
                 </label>
                 <input
                   id="foodName"
                   type="text"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   placeholder="e.g., Spaghetti Carbonara"
                   value={foodName}
                   onChange={handleFoodNameChange}
@@ -106,18 +105,17 @@ const AddAfoodItemPage = () => {
                 />
               </div>
 
-              {/* Food Image input */}
               <div>
                 <label
                   htmlFor="foodImage"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Food Image URL
                 </label>
                 <input
                   id="foodImage"
                   type="url"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   placeholder="e.g., https://example.com/image.jpg"
                   value={foodImage}
                   onChange={handleFoodImageChange}
@@ -126,19 +124,18 @@ const AddAfoodItemPage = () => {
               </div>
             </div>
 
-            {/* Middle row with Category, Quantity, and Price */}
+            {/* Middle row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Food Category select input */}
               <div>
                 <label
                   htmlFor="foodCategory"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Food Category
                 </label>
                 <select
                   id="foodCategory"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   value={foodCategory}
                   onChange={handleFoodCategoryChange}
                 >
@@ -150,17 +147,16 @@ const AddAfoodItemPage = () => {
                 </select>
               </div>
 
-              {/* Food Type select input */}
               <div>
                 <label
                   htmlFor="foodType"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Food Type
                 </label>
                 <select
                   id="foodType"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   value={foodType}
                   onChange={handleFoodTypeChange}
                 >
@@ -172,18 +168,17 @@ const AddAfoodItemPage = () => {
                 </select>
               </div>
 
-              {/* Price input */}
               <div>
                 <label
                   htmlFor="price"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Price
                 </label>
                 <input
                   id="price"
                   type="number"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   placeholder="e.g., 15.99"
                   value={price}
                   onChange={handlePriceChange}
@@ -194,20 +189,19 @@ const AddAfoodItemPage = () => {
               </div>
             </div>
 
-            {/* Bottom row with Quantity, Added By and Food Origin */}
+            {/* Quantity + Origin */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Quantity input */}
               <div>
                 <label
                   htmlFor="quantity"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Quantity
                 </label>
                 <input
                   id="quantity"
                   type="number"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   placeholder="e.g., 50"
                   value={quantity}
                   onChange={handleQuantityChange}
@@ -216,18 +210,17 @@ const AddAfoodItemPage = () => {
                 />
               </div>
 
-              {/* Food Origin input */}
               <div>
                 <label
                   htmlFor="foodOrigin"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                  className="text-sm font-semibold text-gray-700 block mb-1"
                 >
                   Food Origin (Country)
                 </label>
                 <input
                   id="foodOrigin"
                   type="text"
-                  className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                  className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   placeholder="e.g., Italy"
                   value={foodOrigin}
                   onChange={handleFoodOriginChange}
@@ -236,18 +229,18 @@ const AddAfoodItemPage = () => {
               </div>
             </div>
 
-            {/* Added By (read-only) */}
+            {/* Added By */}
             <div>
               <label
                 htmlFor="addedByName"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                className="text-sm font-semibold text-gray-700 block mb-1"
               >
                 Added By
               </label>
               <input
                 id="addedByName"
                 type="text"
-                className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg cursor-not-allowed"
+                className="w-full px-4 py-2 bg-gray-100 text-gray-600 border border-gray-200 rounded-lg cursor-not-allowed"
                 value={
                   user ? `${user.displayName} (${user.email})` : "Loading..."
                 }
@@ -255,17 +248,17 @@ const AddAfoodItemPage = () => {
               />
             </div>
 
-            {/* Description textarea */}
+            {/* Description */}
             <div>
               <label
                 htmlFor="description"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1"
+                className="text-sm font-semibold text-gray-700 block mb-1"
               >
                 Short Description
               </label>
               <textarea
                 id="description"
-                className="w-full px-4 py-2 text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors resize-y"
+                className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y"
                 placeholder="e.g., A creamy pasta dish with pancetta and cheese."
                 rows="4"
                 value={description}
@@ -276,7 +269,7 @@ const AddAfoodItemPage = () => {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="w-full py-3 px-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-90 rounded-lg text-white font-semibold shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2"
             >
               Add Food Item
             </button>

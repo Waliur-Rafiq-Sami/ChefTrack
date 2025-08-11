@@ -91,12 +91,12 @@ const ShapeCard = ({ shape, navigate }) => {
             <p className="md:text-xl font-bold text-green-600 mt-2">
               {shape.details}
             </p>
-            <button
+            {/* <button
               onClick={() => navigate(`/shape/${shape.id}`)}
               className="btn btn-circle  bg-[#1daf1871] hover:bg-[#1daf188c]  border-0 outline-none shadow-md hover:shadow-lg transform hover:scale-110 transition-all duration-300 ease-out text-white text-lg"
             >
               <MdOutlineArrowForwardIos />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

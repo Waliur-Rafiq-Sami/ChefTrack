@@ -4,6 +4,7 @@ import HomePage from "../Components/HomePage/HomePage";
 import Login from "../Components/loginAndRegestation/login";
 import Registration from "../Components/loginAndRegestation/Registration";
 import AddAfoodItemPage from "../Components/AddAfoodItemPage/AddAfoodItemPage";
+import MyProfile from "../Components/Myprofile/MyProfile";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([
       { path: "/login", element: <Login></Login> },
       { path: "/registration", element: <Registration></Registration> },
       { path: "/addFood", element: <AddAfoodItemPage></AddAfoodItemPage> },
+      { path: "/profile", element: <MyProfile></MyProfile> },
     ],
   },
 ]);
