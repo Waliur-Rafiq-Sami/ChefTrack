@@ -57,7 +57,7 @@ const AuthContextProvider = ({ children }) => {
     return () => {
       return unSubscribe();
     };
-  }, []);
+  }, [axiosSecure]);
 
   const authInfo = {
     user,
