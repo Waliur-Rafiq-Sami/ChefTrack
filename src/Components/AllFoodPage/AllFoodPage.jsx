@@ -150,7 +150,7 @@ const AllFoodPage = () => {
           {/* Bottom Filters */}
           <div className="space-y-6">
             {/* Price Range */}
-            <div>
+            <div className="mt-5">
               <h3 className="font-semibold mb-2 text-gray-700">Price Range</h3>
               <div className="flex items-center gap-2">
                 <input

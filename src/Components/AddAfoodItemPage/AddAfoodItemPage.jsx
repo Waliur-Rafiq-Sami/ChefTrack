@@ -41,6 +41,7 @@ const AddAfoodItemPage = () => {
   const [price, setPrice] = useState("");
   const [foodOrigin, setFoodOrigin] = useState("");
   const [description, setDescription] = useState("");
+  const [sortDescription, setSortDescription] = useState("");
 
   // Handle changes for each input field
   const handleFoodNameChange = (e) => setFoodName(e.target.value);
@@ -51,6 +52,7 @@ const AddAfoodItemPage = () => {
   const handlePriceChange = (e) => setPrice(e.target.value);
   const handleFoodOriginChange = (e) => setFoodOrigin(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
+  const handleSortDescriptionChange = (e) => setSortDescription(e.target.value);
 
   // Handle the form submission
   const handleSubmit = (e) => {
@@ -66,6 +68,7 @@ const AddAfoodItemPage = () => {
       addedBy: loggedInUser,
       foodOrigin,
       description,
+      sortDescription,
     };
 
     // In a real application, you would send this data to a server
@@ -267,13 +270,32 @@ const AddAfoodItemPage = () => {
               />
             </div>
 
-            {/* Description */}
+            {/*Short Description */}
             <div>
               <label
                 htmlFor="description"
                 className="text-sm font-semibold text-gray-700 block mb-1"
               >
                 Short Description
+              </label>
+              <textarea
+                id="description"
+                className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y"
+                placeholder="e.g., A creamy pasta dish with pancetta and cheese."
+                rows="2"
+                value={sortDescription}
+                onChange={handleSortDescriptionChange}
+                required
+              ></textarea>
+            </div>
+
+            {/*Long Description */}
+            <div>
+              <label
+                htmlFor="description"
+                className="text-sm font-semibold text-gray-700 block mb-1"
+              >
+                Description
               </label>
               <textarea
                 id="description"

@@ -155,30 +155,39 @@ const Navbar = () => {
             </NavLink>
             <NavLink
               to="/profile"
-              className="btn-sm md:w-9 w-6 border p-1 border-gray-400 bg-gray-100 rounded-full hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+              className="relative btn-sm md:w-9 w-6 border p-1 border-gray-400 bg-gray-100 rounded-full hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
             >
               <img src={shopping_card} alt="" />
+              <span className="outline-gray-300 shadow-2xl rounded-full border-green-400 absolute -top-3 -right-3 text-[#1136db] font-extrabold px-2">
+                0
+              </span>
             </NavLink>
             {!loading &&
               (user ? (
                 user.photoURL ? (
-                  <NavLink
-                    to="/profile"
-                    className="btn-sm bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
-                  >
-                    <img
-                      src={user?.photoURL}
-                      alt="Profile"
-                      className="w-10 h-10 rounded-full object-cover border border-gray-300"
-                    />
-                  </NavLink>
+                  <>
+                    <NavLink
+                      to="/profile"
+                      className="relative btn-sm bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+                    >
+                      <img
+                        src={user?.photoURL}
+                        alt="Profile"
+                        className=" w-10 h-10 rounded-full object-cover border border-gray-300"
+                      />
+                      <span className="border-5 outline-1 outline-gray-300 shadow-2xl rounded-full border-green-400 absolute top-0 right-0"></span>
+                    </NavLink>
+                  </>
                 ) : (
-                  <NavLink
-                    to="/profile"
-                    className="btn-sm  border md:p-[5.5px] p-1 border-gray-400 bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
-                  >
-                    <BiUser />
-                  </NavLink>
+                  <>
+                    <NavLink
+                      to="/profile"
+                      className="relative btn-sm  border md:p-[5.5px] p-1 border-gray-400 bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+                    >
+                      <BiUser />
+                      <span className="border-5 outline-1 outline-gray-300 shadow-2xl rounded-full border-green-400 absolute top-0 right-0"></span>
+                    </NavLink>
+                  </>
                 )
               ) : (
                 <NavLink

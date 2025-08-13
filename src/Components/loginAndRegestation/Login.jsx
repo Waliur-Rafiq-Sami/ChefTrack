@@ -62,7 +62,7 @@ const Login = () => {
         <img src={login} alt="" />
       </div>
 
-      <div className="bg-base-200 lg:w-1/3 w-full p-2">
+      <div className="bg-base-200 xl:w-1/3 lg:w-1/2 w-full p-2">
         <div className="card bg-base-200 w-full shadow-2xl p-5">
           <h3 className="text-3xl font-bold text-center my-3">Login Page</h3>
           <div className="">
