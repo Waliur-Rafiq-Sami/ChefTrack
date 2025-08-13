@@ -49,7 +49,7 @@ const AuthContextProvider = ({ children }) => {
       setUser(currentUser);
       console.log("state change : ", currentUser);
       axiosSecure
-        .get(`/profile/${currentUser.email}`)
+        .get(`/profile/${currentUser?.email}`)
         .then((d) => setMyProfile(d.data))
         .catch((e) => console.log(e));
       setLoading(false);

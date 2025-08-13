@@ -72,7 +72,7 @@ const AddAfoodItemPage = () => {
     // and show a toast/alert on success or failure.
     console.log("Submitting new food item:", newFoodItem);
     // axiosSecure
-    //   .post("/foods", newFoodItem)
+    //   .post("/addFoods", newFoodItem)
     //   .then((r) => {
     //     console.log(r.data);
 
