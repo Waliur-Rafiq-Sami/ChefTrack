@@ -8,13 +8,17 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "./firebase.config";
+import useAxiousSecure from "../Hook/useAxiousSecure";
 
 export const AuthProvider = createContext();
 
 const AuthContextProvider = ({ children }) => {
+  const axiosSecure = useAxiousSecure();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
+  const [myProfile, setMyProfile] = useState(null);
 
   //createUserUseEmailAndPass
   const createUserUseEmailAndPass = (e, p) => {
@@ -44,6 +48,10 @@ const AuthContextProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       console.log("state change : ", currentUser);
+      axiosSecure
+        .get(`/profile/${currentUser.email}`)
+        .then((d) => setMyProfile(d.data))
+        .catch((e) => console.log(e));
       setLoading(false);
     });
     return () => {
@@ -58,6 +66,9 @@ const AuthContextProvider = ({ children }) => {
     signInWithEmailAndPass,
     signInWithGoogle,
     logOut,
+
+    myProfile,
+    setMyProfile,
   };
   return (
     <AuthProvider.Provider value={authInfo}>{children}</AuthProvider.Provider>

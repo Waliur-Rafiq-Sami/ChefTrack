@@ -1,13 +1,20 @@
 import { useState, useContext } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
+import useAxiousSecure from "../../Hook/useAxiousSecure";
 
 const AddAfoodItemPage = () => {
   // We use the mock context to get the user information
   // This will now correctly get the user object from the provider.
-  const { user } = useContext(AuthProvider);
+  const { user, myProfile } = useContext(AuthProvider);
 
+  const axiosSecure = useAxiousSecure();
   // Define an array of food categories for the select input
   const foodCategories = [
+    "Fast Food",
+    "Italian",
+    "Asian",
+    "Seafood",
+    "Vegetarian",
     "Appetizer",
     "Main Course",
     "Dessert",
@@ -30,7 +37,7 @@ const AddAfoodItemPage = () => {
   const [foodImage, setFoodImage] = useState("");
   const [foodCategory, setFoodCategory] = useState(foodCategories[0]);
   const [foodType, setFoodType] = useState(foodTypes[0]);
-  const [quantity, setQuantity] = useState("");
+  const [calorie, setCalorie] = useState("");
   const [price, setPrice] = useState("");
   const [foodOrigin, setFoodOrigin] = useState("");
   const [description, setDescription] = useState("");
@@ -40,7 +47,7 @@ const AddAfoodItemPage = () => {
   const handleFoodImageChange = (e) => setFoodImage(e.target.value);
   const handleFoodCategoryChange = (e) => setFoodCategory(e.target.value);
   const handleFoodTypeChange = (e) => setFoodType(e.target.value);
-  const handleQuantityChange = (e) => setQuantity(e.target.value);
+  const handleCalorieChange = (e) => setCalorie(e.target.value);
   const handlePriceChange = (e) => setPrice(e.target.value);
   const handleFoodOriginChange = (e) => setFoodOrigin(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
@@ -54,7 +61,7 @@ const AddAfoodItemPage = () => {
       foodImage,
       foodCategory,
       foodType,
-      quantity: Number(quantity),
+      calorie: Number(calorie),
       price: Number(price),
       addedBy: loggedInUser,
       foodOrigin,
@@ -64,16 +71,24 @@ const AddAfoodItemPage = () => {
     // In a real application, you would send this data to a server
     // and show a toast/alert on success or failure.
     console.log("Submitting new food item:", newFoodItem);
+    // axiosSecure
+    //   .post("/foods", newFoodItem)
+    //   .then((r) => {
+    //     console.log(r.data);
 
     // Reset the form fields after submission
-    setFoodName("");
-    setFoodImage("");
-    setFoodCategory(foodCategories[0]);
-    setFoodType(foodTypes[0]);
-    setQuantity("");
-    setPrice("");
-    setFoodOrigin("");
-    setDescription("");
+
+    // setFoodName("");
+    // setFoodImage("");
+    // setFoodCategory(foodCategories[0]);
+    // setFoodType(foodTypes[0]);
+    // setCalorie("");
+    // setPrice("");
+    // setFoodOrigin("");
+    // setDescription("");
+
+    // })
+    // .catch((e) => console.log(e));
   };
 
   return (
@@ -189,22 +204,22 @@ const AddAfoodItemPage = () => {
               </div>
             </div>
 
-            {/* Quantity + Origin */}
+            {/* calorie + Origin */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label
-                  htmlFor="quantity"
+                  htmlFor="calorie"
                   className="text-sm font-semibold text-gray-700 block mb-1"
                 >
-                  Quantity
+                  calorie
                 </label>
                 <input
-                  id="quantity"
+                  id="calorie"
                   type="number"
                   className="w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   placeholder="e.g., 50"
-                  value={quantity}
-                  onChange={handleQuantityChange}
+                  value={calorie}
+                  onChange={handleCalorieChange}
                   min="0"
                   required
                 />
@@ -242,7 +257,11 @@ const AddAfoodItemPage = () => {
                 type="text"
                 className="w-full px-4 py-2 bg-gray-100 text-gray-600 border border-gray-200 rounded-lg cursor-not-allowed"
                 value={
-                  user ? `${user.displayName} (${user.email})` : "Loading..."
+                  user
+                    ? `${user?.displayName || myProfile?.displayName} (${
+                        user.email
+                      })`
+                    : "Loading..."
                 }
                 readOnly
               />

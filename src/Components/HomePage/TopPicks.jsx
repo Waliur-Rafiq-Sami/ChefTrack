@@ -62,7 +62,7 @@ const topFoodItems = [
   },
 ];
 
-const SpecialItems = () => {
+const TopPicks = () => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
 
@@ -127,4 +127,4 @@ const SpecialItems = () => {
   );
 };
 
-export default SpecialItems;
+export default TopPicks;

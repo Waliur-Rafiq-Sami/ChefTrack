@@ -57,7 +57,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="flex items-center gap-5 justify-center mt-10 flex-col-reverse md:flex-row">
+    <div className="flex items-center gap-5 justify-center mt-10 flex-col-reverse md:flex-row my-10 md:my-30">
       <div className="lg:w-1/3 w-full">
         <img src={login} alt="" />
       </div>
