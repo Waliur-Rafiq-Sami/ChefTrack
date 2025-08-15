@@ -173,9 +173,9 @@ const Navbar = () => {
                       <img
                         src={user?.photoURL}
                         alt="Profile"
-                        className=" w-10 h-10 rounded-full object-cover border border-gray-300"
+                        className="w-7 h-7 md:w-10 md:h-10 rounded-full object-cover border border-gray-300"
                       />
-                      <span className="border-5 outline-1 outline-gray-300 shadow-2xl rounded-full border-green-400 absolute top-0 right-0"></span>
+                      <span className="md:border-5 border-4 outline-1 outline-gray-300 shadow-2xl rounded-full border-green-400 absolute top-0 right-0"></span>
                     </NavLink>
                   </>
                 ) : (

@@ -6,6 +6,7 @@ import Registration from "../Components/loginAndRegestation/Registration";
 import AddAfoodItemPage from "../Components/AddAfoodItemPage/AddAfoodItemPage";
 import MyProfile from "../Components/Myprofile/MyProfile";
 import AllFoodPage from "../Components/AllFoodPage/AllFoodPage";
+import UpdateFoodPage from "../Components/UpdateFoodPage/UpdateFoodPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
       { path: "/addFood", element: <AddAfoodItemPage></AddAfoodItemPage> },
       { path: "/profile", element: <MyProfile></MyProfile> },
       { path: "/foods", element: <AllFoodPage></AllFoodPage> },
+      { path: "/updateFood", element: <UpdateFoodPage></UpdateFoodPage> },
     ],
   },
 ]);

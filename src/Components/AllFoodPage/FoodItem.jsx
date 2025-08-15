@@ -1,43 +1,56 @@
 import shopingCard from "../../Img/shopping_Bag/shopping_Bag.png";
 import deleteIcon from "../../Img/delete/delete.png";
+import updateBtn from "../../Img/Update/refresh_18755159.png";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import discountIcon from "../../Img/Discount/discount_ds.png";
 
 const FoodItem = ({ food }) => {
+  const navigate = useNavigate();
   console.log(food);
   return (
     <div className="relative border border-blue-200 p-4 m-3 rounded-2xl shadow-lg bg-white hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
       {/* Special Badge */}
       {food?.foodType?.toLowerCase() === "special" && (
-        <div className="absolute top-3 left-3 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+        <div className="absolute top-6 left-6 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
           ★ Special
         </div>
       )}
       {/* Top food Badge */}
       {food?.foodType?.toLowerCase() === "top food" && (
-        <div className="absolute top-3 left-3 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+        <div className="absolute top-6 left-6 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
           ★ Top food
         </div>
       )}
       {/* Unique Badge */}
       {food?.foodType?.toLowerCase() === "unique" && (
-        <div className="absolute top-3 left-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+        <div className="absolute top-6 left-6 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
           ★ Unique
         </div>
       )}
       {/* Expansive Badge */}
       {food?.foodType?.toLowerCase() === "expansive" && (
-        <div className="absolute top-3 left-3 bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+        <div className="absolute top-6 left-6 bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
           ★ Expansive
         </div>
       )}
-
+      {/* Discount Badge - Premium & Eye-catching */}
+      {food?.Discount > 0 && (
+        <div className="absolute -top-2 -right-10 text-white text-xs font-bold px-3 py-1">
+          <div className="relative">
+            <img src={discountIcon} className="w-18" alt="" />
+            <p className="absolute top-2 right-6 text-[14px]">
+              {food.Discount}
+            </p>
+          </div>
+        </div>
+      )}
       {/* Food Image */}
       <img
         className="w-full h-60 object-cover rounded-xl shadow-md"
         src={food.foodImage}
         alt={food.foodName}
       />
-
       {/* Food Info */}
       <div className="mt-4 space-y-1">
         <h5 className="font-extrabold text-xl text-gray-800">
@@ -64,14 +77,22 @@ const FoodItem = ({ food }) => {
       </div>
 
       {/* Added By */}
-      <div className="mt-3 text-sm text-gray-500 italic max-w-70">
+      {/* <div className="mt-3 text-sm text-gray-500 italic max-w-70">
         Added by: {food.addedBy?.name} ({food.addedBy?.email})
-      </div>
+      </div> */}
 
       {/* Button */}
-      <div className="flex gap-2 items-center ">
-        <button className="mt-4 w-full bg-[#5fc01fe7] hover:bg-yellow-600 text-white py-2 rounded-lg font-semibold transition-all duration-300">
+      <div className="flex gap-2 items-center justify-end">
+        {/* <button className="mt-4 w-full bg-[#5fc01fe7] hover:bg-yellow-600 text-white py-2 rounded-lg font-semibold transition-all duration-300">
           Update{" "}
+        </button> */}
+        <button
+          onClick={() => {
+            navigate(`/updateFood`, { state: food });
+          }}
+          className="rounded-full mt-4 hover:scale-105 hover:-rotate-45 pt-3 py-2 font-semibold transition-all duration-300"
+        >
+          <img className="w-9" src={updateBtn} alt="" />
         </button>
         {/* //delete  */}
         <button className="rounded-full mt-4 hover:scale-105 hover:-rotate-12 py-2 font-semibold transition-all duration-300">
