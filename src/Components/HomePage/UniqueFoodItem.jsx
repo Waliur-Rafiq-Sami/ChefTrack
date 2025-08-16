@@ -77,7 +77,7 @@ const UniqueFoodItem = () => {
         {uniqueFoodItems.map((item) => (
           <div
             key={item._id}
-            className="w-full md:w-80 flex-none md:flex-initial p-4"
+            className="w-full md:w-80 flex-none md:flex-initial p-4 md:pb-15"
           >
             <FoodCard food={item} navigate={navigate} />
           </div>

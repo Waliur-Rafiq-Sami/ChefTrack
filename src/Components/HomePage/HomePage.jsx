@@ -33,7 +33,8 @@ const HomePage = () => {
       </div>
 
       {/* // special items  */}
-      <div className="md:mx-5 mx-1 md:mt-10">
+      {/* <div className="md:mx-5 mx-1 md:mt-10"> */}
+      <div className="">
         <h1 className="md:text-3xl text-xl mt-3 font-bold text-center">
           Our Special Items
         </h1>
@@ -52,7 +53,7 @@ const HomePage = () => {
       {/* Unique & Premium Food Intro */}
       <TastTheEx></TastTheEx>
       {/* Our unique food  */}
-      <div className="md:mb-10 md:mt-10">
+      <div className="md:mt-10">
         <h1 className="md:text-3xl text-xl mt-3 font-bold text-center">
           Our Unique Food
         </h1>
@@ -66,7 +67,7 @@ const HomePage = () => {
       </div>
 
       {/* Our Expancive food  */}
-      <div className="md:mb-10 md:mt-10">
+      <div className="">
         <h1 className="md:text-3xl text-xl mt-3 font-bold text-center">
           Our Premium Creations
         </h1>

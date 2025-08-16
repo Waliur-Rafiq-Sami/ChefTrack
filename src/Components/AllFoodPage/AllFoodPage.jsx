@@ -4,6 +4,7 @@ import FoodItem from "./FoodItem";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
+import FoodItemSkeleton from "../../shared/FoodItemSkeleton/FoodItemSkeleton";
 
 /** Inline icons (to avoid lucide-react import errors) */
 const Search = ({ className = "" }) => (
@@ -48,6 +49,7 @@ const AllFoodPage = () => {
   const [type, setType] = useState(""); // Food Type
   const [priceRange, setPriceRange] = useState([0, 99999]);
   const [calorieRange, setCalorieRange] = useState([0, 99999]);
+  const [loading, setLoading] = useState(true);
 
   const axiosSecure = useAxiousSecure();
 
@@ -58,7 +60,8 @@ const AllFoodPage = () => {
       .catch((e) => {
         console.error(e);
         setAllFood([]);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [axiosSecure]);
 
   // === Filtered list (no style changes; just logic) ===
@@ -294,16 +297,40 @@ const AllFoodPage = () => {
         </div>
       </aside>
 
-      {/* Food Grid */}
-      <div className="h-full grid md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 flex-1">
-        {filteredFood.map((food) => (
-          <FoodItem
-            key={food._id}
-            food={food}
-            handleDeleteFood={handleDeleteFood}
-            handleAddCard={handleAddCard}
-          />
-        ))}
+      <div className="h-full grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 flex-1">
+        {loading ? (
+          Array.from({ length: 6 }).map((_, i) => <FoodItemSkeleton key={i} />)
+        ) : filteredFood.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center text-gray-500 py-12 xl:mt-50 md:mt-25 mt-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-16 w-16 mb-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9.75v.008h.008V9.75H12zm0 4.5v.008h.008v-.008H12zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <p className="text-lg font-medium">No Food Found</p>
+            <p className="text-sm text-gray-400">
+              Try adjusting your filters or search term
+            </p>
+          </div>
+        ) : (
+          filteredFood.map((food) => (
+            <FoodItem
+              key={food._id}
+              food={food}
+              handleDeleteFood={handleDeleteFood}
+              handleAddCard={handleAddCard}
+            />
+          ))
+        )}
       </div>
     </div>
   );
