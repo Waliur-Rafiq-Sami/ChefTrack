@@ -28,7 +28,7 @@ const Login = () => {
           navigate(from, { state: location.state?.from.state });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         // console.log(err);
         SwalAlart({
           type: 1,

@@ -3,7 +3,6 @@ import deleteIcon from "../../Img/delete/delete.png";
 import updateBtn from "../../Img/Update/refresh_18755159.png";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import discountIcon from "../../Img/Discount/discount_ds.png";
 
 const FoodItem = ({ food, handleDeleteFood, handleAddCard }) => {
   const navigate = useNavigate();

@@ -123,7 +123,7 @@ const AllFoodPage = () => {
                 setAllFood(allFood.filter((food) => food._id !== id));
               }
             })
-            .catch((e) => {
+            .catch(() => {
               swalWithBootstrapButtons.fire({
                 title: "Sorry!!!",
                 text: "Something Wrong",
