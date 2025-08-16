@@ -20,7 +20,7 @@ const SingleCard = ({ food, navigate }) => {
       bg: "bg-gradient-to-r from-yellow-500 to-amber-600",
     },
   };
-  console.log(food);
+  // console.log(food);
   return (
     <div className="relative bg-white rounded-xl shadow-xl overflow-hidden hover:scale-105 transition-transform duration-300 border border-gray-200">
       {/* Special Offer Badge */}

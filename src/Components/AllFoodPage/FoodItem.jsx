@@ -5,10 +5,8 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import discountIcon from "../../Img/Discount/discount_ds.png";
 
-const FoodItem = ({ food, handleDeleteFood }) => {
+const FoodItem = ({ food, handleDeleteFood, handleAddCard }) => {
   const navigate = useNavigate();
-  // console.log(food);
-
   return (
     <div className="relative border border-blue-200 p-4 m-3 rounded-2xl shadow-lg bg-white hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
       {/* Special Badge */}
@@ -107,7 +105,12 @@ const FoodItem = ({ food, handleDeleteFood }) => {
         </button>
 
         {/* //shopping card  */}
-        <button className="rounded-full mt-4 hover:scale-105 hover:-rotate-12 py-2 font-semibold transition-all duration-300">
+        <button
+          onClick={() => {
+            handleAddCard(food._id);
+          }}
+          className="rounded-full mt-4 hover:scale-105 hover:-rotate-12 py-2 font-semibold transition-all duration-300"
+        >
           <img className="w-10" src={shopingCard} alt="" />
         </button>
 

@@ -8,11 +8,12 @@ import { FaPhoneFlip } from "react-icons/fa6";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
 import { LiaUserAltSlashSolid } from "react-icons/lia";
 import { _destroy } from "./../../../node_modules/sweetalert2/src/instanceMethods/_destroy";
+import useTotalQuantity from "../../Hook/getTotalQuantity";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user, logOut, loading } = useContext(AuthProvider);
-
+  const { user, logOut, loading, update } = useContext(AuthProvider);
+  const totalQuantity = useTotalQuantity(update);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const closeSidebar = () => setIsSidebarOpen(false);
 
@@ -159,7 +160,7 @@ const Navbar = () => {
             >
               <img src={shopping_card} alt="" />
               <span className="outline-gray-300 shadow-2xl rounded-full border-green-400 absolute -top-3 -right-3 text-[#1136db] font-extrabold px-2">
-                0
+                {totalQuantity}
               </span>
             </NavLink>
             {!loading &&

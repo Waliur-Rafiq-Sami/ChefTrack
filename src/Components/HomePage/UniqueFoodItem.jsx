@@ -53,7 +53,7 @@ const UniqueFoodItem = () => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   const uniqueFoodItems = GetDataUsingCondition("Unique", 6);
-  console.log(uniqueFoodItems);
+  // console.log(uniqueFoodItems);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -76,7 +76,7 @@ const UniqueFoodItem = () => {
       >
         {uniqueFoodItems.map((item) => (
           <div
-            key={item.id}
+            key={item._id}
             className="w-full md:w-80 flex-none md:flex-initial p-4"
           >
             <FoodCard food={item} navigate={navigate} />

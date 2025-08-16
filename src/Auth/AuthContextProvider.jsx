@@ -19,6 +19,7 @@ const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
   const [myProfile, setMyProfile] = useState(null);
+  const [update, setUpdate] = useState(false);
 
   //createUserUseEmailAndPass
   const createUserUseEmailAndPass = (e, p) => {
@@ -69,6 +70,9 @@ const AuthContextProvider = ({ children }) => {
 
     myProfile,
     setMyProfile,
+
+    update,
+    setUpdate,
   };
   return (
     <AuthProvider.Provider value={authInfo}>{children}</AuthProvider.Provider>

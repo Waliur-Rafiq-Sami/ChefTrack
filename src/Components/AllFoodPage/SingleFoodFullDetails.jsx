@@ -4,13 +4,39 @@ import deleteIcon from "../../Img/delete/delete.png";
 import updateBtn from "../../Img/Update/refresh_18755159.png";
 import Swal from "sweetalert2";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
+import { useContext } from "react";
+import { AuthProvider } from "../../Auth/AuthContextProvider";
+import { toast, ToastContainer } from "react-toastify";
 
 const SingleFoodFullDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const food = location.state;
   const axiosSecure = useAxiousSecure();
-  // console.log("single page",food);
+  const { user, update, setUpdate } = useContext(AuthProvider);
+
+  const handleAddCard = (id) => {
+    const data = {
+      email: user.email,
+      foodId: id,
+      purchaseDate: new Date().toISOString(),
+    };
+    axiosSecure
+      .post("/MyPurchasePage", data)
+      .then((res) => {
+        const data = res.data;
+        if (data.success) {
+          setUpdate(!update);
+          toast(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleDeleteFood = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -63,9 +89,11 @@ const SingleFoodFullDetails = () => {
         }
       });
   };
+
   return (
     <div className="mx-auto p-4 sm:p-6 max-w-7xl">
       {/* Card */}
+      <ToastContainer></ToastContainer>
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Image */}
@@ -168,7 +196,12 @@ const SingleFoodFullDetails = () => {
               </button>
 
               {/* Add to Cart Button */}
-              <button className="flex text-sm md:text-md items-center md:gap-2 md:px-5 px-3 py-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <button
+                onClick={() => {
+                  handleAddCard(food._id);
+                }}
+                className="flex text-sm md:text-md items-center md:gap-2 md:px-5 px-3 py-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
                 <img
                   className="md:w-6 w-4"
                   src={shopingCard}

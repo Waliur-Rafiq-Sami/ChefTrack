@@ -4,59 +4,6 @@ import SingleCard from "../SingleCard/SingleCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import GetDataUsingCondition from "../../Hook/GetDataUsingCondition";
 
-// const specialFoods = [
-//   {
-//     id: 1,
-//     name: "Classic Burger Combo",
-//     image: img1,
-//     category: "Fast Food",
-//     price: 12.99,
-//     purchaseCount: 500,
-//     spacial: 5,
-//   },
-//   {
-//     id: 2,
-//     name: "Supreme Pizza",
-//     image: img2,
-//     category: "Italian",
-//     price: 18.5,
-//     purchaseCount: 450,
-//   },
-//   {
-//     id: 3,
-//     name: "Chicken & Fries Combo",
-//     image: img3,
-//     category: "Fast Food",
-//     price: 15.75,
-//     purchaseCount: 420,
-//   },
-//   {
-//     id: 4,
-//     name: "Stir-fried Noodles",
-//     image: img4,
-//     category: "Asian",
-//     price: 10.5,
-//     purchaseCount: 380,
-//   },
-//   {
-//     id: 5,
-//     name: "Crispy Fried Calamari",
-//     image: img5,
-//     category: "Seafood",
-//     price: 16.25,
-//     purchaseCount: 350,
-//     spacial: 2,
-//   },
-//   {
-//     id: 6,
-//     name: "Grilled Vegetable Platter",
-//     image: img6,
-//     category: "Vegetarian",
-//     price: 14.0,
-//     purchaseCount: 320,
-//   },
-// ];
-
 const SpecialItems = () => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
@@ -89,7 +36,7 @@ const SpecialItems = () => {
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {sortedItems.map((item) => (
-          <div key={item.id} className="md:min-w-[350px]">
+          <div key={item._id} className="md:min-w-[350px]">
             <SingleCard food={item} navigate={navigate} />
           </div>
         ))}

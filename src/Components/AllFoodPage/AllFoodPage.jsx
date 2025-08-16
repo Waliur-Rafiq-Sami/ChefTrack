@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
 import FoodItem from "./FoodItem";
 import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
+import { AuthProvider } from "../../Auth/AuthContextProvider";
 
 /** Inline icons (to avoid lucide-react import errors) */
 const Search = ({ className = "" }) => (
@@ -39,7 +41,7 @@ const UtensilsCrossed = ({ className = "" }) => (
 
 const AllFoodPage = () => {
   const [allFood, setAllFood] = useState([]);
-
+  const { user, update, setUpdate } = useContext(AuthProvider);
   // === ADDED: states your sidebar uses ===
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState(""); // Food Category
@@ -135,10 +137,31 @@ const AllFoodPage = () => {
       });
   };
 
+  const handleAddCard = (id) => {
+    const data = {
+      email: user.email,
+      foodId: id,
+      purchaseDate: new Date().toISOString(),
+    };
+    axiosSecure
+      .post("/MyPurchasePage", data)
+      .then((res) => {
+        const data = res.data;
+        if (data.success) {
+          toast(data.message);
+          setUpdate(!update);
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="flex gap-6 flex-col md:flex-row">
       {/* Sidebar */}
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <aside className="p-4 border-r border-gray-200 w-full md:w-1/4 lg:w-1/5 xl:w-1/6 xl:h-svh space-y-6 pt-5 flex md:flex-col gap-5">
         <div>
           {/* Top Filters */}
@@ -278,6 +301,7 @@ const AllFoodPage = () => {
             key={food._id}
             food={food}
             handleDeleteFood={handleDeleteFood}
+            handleAddCard={handleAddCard}
           />
         ))}
       </div>
