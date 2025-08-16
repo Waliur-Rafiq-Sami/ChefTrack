@@ -154,7 +154,7 @@ const Navbar = () => {
               <FaPhoneFlip />
             </NavLink>
             <NavLink
-              to="/profile"
+              to="/MyPurchasePage"
               className="relative btn-sm md:w-9 w-6 border p-1 border-gray-400 bg-gray-100 rounded-full hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
             >
               <img src={shopping_card} alt="" />

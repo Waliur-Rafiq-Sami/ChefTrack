@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddAfoodItemPage = () => {
   // We use the mock context to get the user information
@@ -21,10 +22,20 @@ const AddAfoodItemPage = () => {
     "Beverage",
     "Side Dish",
     "Soup",
+    "Vegan",
+    "Non-Veg",
+    "Salad",
   ];
 
   // Define an array of food types for the new select input
-  const foodTypes = ["Normal", "Top food", "Special", "Unique", "Expansive"];
+  const foodTypes = [
+    "Normal",
+    "Top food",
+    "Special",
+    "Unique",
+    "Expansive",
+    "Vegetarian",
+  ];
 
   // This object now correctly uses the user data from the context.
   const loggedInUser = {
@@ -73,30 +84,30 @@ const AddAfoodItemPage = () => {
 
     // In a real application, you would send this data to a server
     // and show a toast/alert on success or failure.
-    console.log("Submitting new food item:", newFoodItem);
-    // axiosSecure
-    //   .post("/addFoods", newFoodItem)
-    //   .then((r) => {
-    //     console.log(r.data);
-
-    // Reset the form fields after submission
-
-    // setFoodName("");
-    // setFoodImage("");
-    // setFoodCategory(foodCategories[0]);
-    // setFoodType(foodTypes[0]);
-    // setCalorie("");
-    // setPrice("");
-    // setFoodOrigin("");
-    // setDescription("");
-
-    // })
-    // .catch((e) => console.log(e));
+    // console.log("Submitting new food item:", newFoodItem);
+    axiosSecure
+      .post("/addFoods", newFoodItem)
+      .then((r) => {
+        console.log(r.data);
+        // Reset the form fields after submission
+        toast("Add Successfully");
+        setFoodName("");
+        setFoodImage("");
+        setFoodCategory(foodCategories[0]);
+        setFoodType(foodTypes[0]);
+        setCalorie("");
+        setPrice("");
+        setFoodOrigin("");
+        setDescription("");
+        setSortDescription("");
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen p-6 font-sans bg-gradient-to-br ">
       <div className="w-full max-w-2xl">
+        <ToastContainer />
         <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/30">
           <h2 className="md:text-3xl font-bold text-center text-indigo-700 mb-8">
             🍽 Add a New Food Item

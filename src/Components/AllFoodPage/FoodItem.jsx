@@ -5,9 +5,10 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import discountIcon from "../../Img/Discount/discount_ds.png";
 
-const FoodItem = ({ food }) => {
+const FoodItem = ({ food, handleDeleteFood }) => {
   const navigate = useNavigate();
-  console.log(food);
+  // console.log(food);
+
   return (
     <div className="relative border border-blue-200 p-4 m-3 rounded-2xl shadow-lg bg-white hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
       {/* Special Badge */}
@@ -69,7 +70,8 @@ const FoodItem = ({ food }) => {
           <span className="font-semibold">Calories:</span> {food.calorie} kcal
         </p>
         <p className="text-gray-700">
-          <span className="font-semibold">Description:</span> {food.description}
+          <span className="font-semibold">Description:</span>{" "}
+          {food.sortDescription}
         </p>
         <p className="text-green-600 font-bold text-lg">
           <span className="text-gray-800">Price:</span> ${food.price.toFixed(2)}
@@ -95,7 +97,12 @@ const FoodItem = ({ food }) => {
           <img className="w-9" src={updateBtn} alt="" />
         </button>
         {/* //delete  */}
-        <button className="rounded-full mt-4 hover:scale-105 hover:-rotate-12 py-2 font-semibold transition-all duration-300">
+        <button
+          onClick={() => {
+            handleDeleteFood(food._id);
+          }}
+          className="rounded-full mt-4 hover:scale-105 hover:-rotate-12 py-2 font-semibold transition-all duration-300"
+        >
           <img className="w-8" src={deleteIcon} alt="" />
         </button>
 
@@ -104,7 +111,12 @@ const FoodItem = ({ food }) => {
           <img className="w-10" src={shopingCard} alt="" />
         </button>
 
-        <button className="bg-[#6bbabd3a] text-[#55b827] rounded-full mt-5 hover:scale-105 hover:-rotate-12 py-2 px-4 font-semibold transition-all duration-300">
+        <button
+          onClick={() => {
+            navigate("/SingleFoodDetails", { state: food });
+          }}
+          className="bg-[#6bbabd3a] text-[#55b827] rounded-full mt-5 hover:scale-105 hover:-rotate-12 py-2 px-4 font-semibold transition-all duration-300"
+        >
           <MdOutlineArrowForwardIos />
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
@@ -7,8 +7,7 @@ const UpdateFoodPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const food = location.state;
-  //   console.log(food._id);
-  const { user, myProfile } = useContext(AuthProvider);
+  console.log(food);
   const axiosSecure = useAxiousSecure();
 
   const foodCategories = [
@@ -27,10 +26,7 @@ const UpdateFoodPage = () => {
   const disCountNumber = [0, 2, 5, 10, 12, 15, 18, 20];
   const foodTypes = ["Normal", "Top food", "Special", "Unique", "Expansive"];
 
-  const loggedInUser = {
-    name: user?.displayName,
-    email: user?.email,
-  };
+  const loggedInUser = food.addedBy;
 
   const [foodName, setFoodName] = useState("");
   const [foodImage, setFoodImage] = useState("");
@@ -94,10 +90,12 @@ const UpdateFoodPage = () => {
       .then((res) => {
         console.log(res.data);
         alert("Food updated successfully!");
-        navigate("/foods");
+        console.log(food._id);
+        navigate("/SingleFoodDetails", { state: updatedFoodItem });
       })
       .catch((err) => console.error(err));
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen p-6 font-sans bg-gradient-to-br ">
       <div className="w-full max-w-2xl">
@@ -299,13 +297,7 @@ const UpdateFoodPage = () => {
                 id="addedByName"
                 type="text"
                 className="w-full px-4 py-2 bg-gray-100 text-gray-600 border border-gray-200 rounded-lg cursor-not-allowed"
-                value={
-                  user
-                    ? `${user?.displayName || myProfile?.displayName} (${
-                        user.email
-                      })`
-                    : "Loading..."
-                }
+                value={`${food.addedBy.name} (${food.addedBy.email})`}
                 readOnly
               />
             </div>

@@ -15,7 +15,7 @@ const HomePage = () => {
         <SliderBanner></SliderBanner>
       </div>
 
-      {/* // special items  */}
+      {/* // TopPicks items  */}
       <div className="md:mx-5 mx-1 md:mt-10">
         <h1 className="md:text-3xl text-xl mt-3 font-bold text-center">
           Our Top Picks

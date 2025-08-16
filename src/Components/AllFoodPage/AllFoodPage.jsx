@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
 import FoodItem from "./FoodItem";
+import Swal from "sweetalert2";
 
 /** Inline icons (to avoid lucide-react import errors) */
 const Search = ({ className = "" }) => (
@@ -79,13 +80,77 @@ const AllFoodPage = () => {
     });
   }, [allFood, searchTerm, category, type, priceRange, calorieRange]);
 
+  const handleDeleteFood = (id) => {
+    console.log(id);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure
+            .delete(`/DeleteFood/${id}`)
+            .then((r) => {
+              if (r.data.deletedCount) {
+                // toast("Deleted Successfully");
+                swalWithBootstrapButtons.fire({
+                  title: "Deleted!",
+                  text: "Food has been deleted.",
+                  icon: "success",
+                });
+                setAllFood(allFood.filter((food) => food._id !== id));
+              }
+            })
+            .catch((e) => {
+              swalWithBootstrapButtons.fire({
+                title: "Sorry!!!",
+                text: "Something Wrong",
+                icon: "error",
+              });
+              console.log(e);
+            });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error",
+          });
+        }
+      });
+  };
+
   return (
     <div className="flex gap-6 flex-col md:flex-row">
       {/* Sidebar */}
+      {/* <ToastContainer /> */}
       <aside className="p-4 border-r border-gray-200 w-full md:w-1/4 lg:w-1/5 xl:w-1/6 xl:h-svh space-y-6 pt-5 flex md:flex-col gap-5">
         <div>
           {/* Top Filters */}
+          {/* Total Dishes Found */}
           <div className="space-y-6">
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-r from-orange-400 to-red-500 shadow-md text-white font-semibold text-sm">
+              <span>Total Dishes Found:</span>
+              <span className="bg-white text-red-500 font-bold px-2 py-0.5 rounded-full shadow">
+                {filteredFood.length}
+              </span>
+            </div>
+
             {/* Search */}
             <div>
               <h3 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
@@ -209,7 +274,11 @@ const AllFoodPage = () => {
       {/* Food Grid */}
       <div className="h-full grid md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 flex-1">
         {filteredFood.map((food) => (
-          <FoodItem key={food._id} food={food} />
+          <FoodItem
+            key={food._id}
+            food={food}
+            handleDeleteFood={handleDeleteFood}
+          />
         ))}
       </div>
     </div>

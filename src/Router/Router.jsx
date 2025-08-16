@@ -7,6 +7,8 @@ import AddAfoodItemPage from "../Components/AddAfoodItemPage/AddAfoodItemPage";
 import MyProfile from "../Components/Myprofile/MyProfile";
 import AllFoodPage from "../Components/AllFoodPage/AllFoodPage";
 import UpdateFoodPage from "../Components/UpdateFoodPage/UpdateFoodPage";
+import SingleFoodFullDetails from "../Components/AllFoodPage/SingleFoodFullDetails";
+import MyPurchasePage from "../Components/MyPurchasePage/MyPurchasePage";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,8 @@ export const router = createBrowserRouter([
       { path: "/profile", element: <MyProfile></MyProfile> },
       { path: "/foods", element: <AllFoodPage></AllFoodPage> },
       { path: "/updateFood", element: <UpdateFoodPage></UpdateFoodPage> },
+      { path: "/SingleFoodDetails", element: <SingleFoodFullDetails /> },
+      { path: "/MyPurchasePage", element: <MyPurchasePage /> },
     ],
   },
 ]);
