@@ -6,6 +6,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import GetDataUsingCondition from "./../../Hook/GetDataUsingCondition";
 
 // Reusable component for displaying a single food item
+// Reusable component for displaying a single food item
 const FoodCard = ({ food, navigate }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden w-full md:max-w-sm md:w-80">
@@ -15,12 +16,37 @@ const FoodCard = ({ food, navigate }) => {
           alt={food.foodName}
           className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
         />
+
+        {/* Unique Badge */}
+
         {food.foodType === "Unique" && (
           <span className="absolute top-2 right-2 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
             Unique
           </span>
         )}
+
+        {/* Discount Badge */}
+        {food.Discount > 0 && (
+          <div className="absolute top-2 left-2 z-20">
+            <div className="relative">
+              {/* Glowing background */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-pink-500 to-yellow-500 opacity-60 filter blur-md animate-pulse"></div>
+
+              {/* Badge Container */}
+              <div
+                className="relative flex items-center justify-center 
+                              bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 
+                              rounded-full shadow-lg px-3 py-1 animate-bounce"
+              >
+                <span className="text-white font-bold text-sm drop-shadow-lg">
+                  {food.Discount}% OFF
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+
       <div className="p-5 flex-col justify-between">
         <div>
           <h2 className="md:text-2xl text-xl font-extrabold text-gray-900 leading-tight">

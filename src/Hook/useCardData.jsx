@@ -9,7 +9,7 @@ const useCardData = (m, id, count) => {
   useEffect(() => {
     if (!m || !id) return;
 
-    console.log("Running useCardData:", m, id);
+    // console.log("Running useCardData:", m, id);
 
     const data = {
       email: user.email,

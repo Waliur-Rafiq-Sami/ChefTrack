@@ -22,7 +22,7 @@ const useTotalQuantity = (cartUpdated) => {
       }
     };
     fetchQuantity();
-  }, [user?.email, axiosSecure, cartUpdated]);
+  }, [user?.email, axiosSecure, cartUpdated, user]);
 
   return quantity;
 };

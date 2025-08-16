@@ -88,7 +88,7 @@ const AddAfoodItemPage = () => {
     axiosSecure
       .post("/addFoods", newFoodItem)
       .then((r) => {
-        console.log(r.data);
+        // console.log(r.data);
         // Reset the form fields after submission
         toast("Add Successfully");
         setFoodName("");

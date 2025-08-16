@@ -9,6 +9,7 @@ import AllFoodPage from "../Components/AllFoodPage/AllFoodPage";
 import UpdateFoodPage from "../Components/UpdateFoodPage/UpdateFoodPage";
 import SingleFoodFullDetails from "../Components/AllFoodPage/SingleFoodFullDetails";
 import MyPurchasePage from "../Components/MyPurchasePage/MyPurchasePage";
+import PriveteRoute from "../Private/PriveteRoute";
 
 export const router = createBrowserRouter([
   {
@@ -16,14 +17,43 @@ export const router = createBrowserRouter([
     element: <Root></Root>,
     children: [
       { path: "/", element: <HomePage></HomePage> },
+      { path: "/foods", element: <AllFoodPage></AllFoodPage> },
       { path: "/login", element: <Login></Login> },
       { path: "/registration", element: <Registration></Registration> },
-      { path: "/addFood", element: <AddAfoodItemPage></AddAfoodItemPage> },
-      { path: "/profile", element: <MyProfile></MyProfile> },
-      { path: "/foods", element: <AllFoodPage></AllFoodPage> },
-      { path: "/updateFood", element: <UpdateFoodPage></UpdateFoodPage> },
       { path: "/SingleFoodDetails", element: <SingleFoodFullDetails /> },
-      { path: "/MyPurchasePage", element: <MyPurchasePage /> },
+
+      {
+        path: "/addFood",
+        element: (
+          <PriveteRoute>
+            <AddAfoodItemPage></AddAfoodItemPage>
+          </PriveteRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PriveteRoute>
+            <MyProfile></MyProfile>
+          </PriveteRoute>
+        ),
+      },
+      {
+        path: "/updateFood",
+        element: (
+          <PriveteRoute>
+            <UpdateFoodPage></UpdateFoodPage>
+          </PriveteRoute>
+        ),
+      },
+      {
+        path: "/MyPurchasePage",
+        element: (
+          <PriveteRoute>
+            <MyPurchasePage />
+          </PriveteRoute>
+        ),
+      },
     ],
   },
 ]);

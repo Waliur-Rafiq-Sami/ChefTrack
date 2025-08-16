@@ -30,7 +30,7 @@ const AuthContextProvider = ({ children }) => {
   //signInWithEmailAndPass
   const signInWithEmailAndPass = (e, p) => {
     setLoading(true);
-    console.log(e, p);
+    // console.log(e, p);
     return signInWithEmailAndPassword(auth, e, p);
   };
 
@@ -48,7 +48,7 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("state change : ", currentUser);
+      // console.log("state change : ", currentUser);
       axiosSecure
         .get(`/profile/${currentUser?.email}`)
         .then((d) => setMyProfile(d.data))

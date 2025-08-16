@@ -75,7 +75,7 @@ const SingleFoodFullDetails = () => {
                 text: "Something Wrong",
                 icon: "error",
               });
-              console.log(e);
+              // console.log(e);
             });
         } else if (
           /* Read more about handling dismissals below */

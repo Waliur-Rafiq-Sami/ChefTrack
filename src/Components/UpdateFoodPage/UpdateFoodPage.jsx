@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
-import { AuthProvider } from "../../Auth/AuthContextProvider";
+import Swal from "sweetalert2";
 
 const UpdateFoodPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const food = location.state;
-  console.log(food);
+  // console.log(food);
   const axiosSecure = useAxiousSecure();
 
   const foodCategories = [
@@ -83,17 +83,39 @@ const UpdateFoodPage = () => {
       updatedFoodItem.oldDiscount = oldDiscount;
     }
 
-    console.log(updatedFoodItem);
-
-    axiosSecure
-      .put(`/updateFood`, updatedFoodItem)
-      .then((res) => {
-        console.log(res.data);
-        alert("Food updated successfully!");
-        console.log(food._id);
-        navigate("/SingleFoodDetails", { state: updatedFoodItem });
-      })
-      .catch((err) => console.error(err));
+    // SweetAlert confirmation before updating
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to update this food item?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .put(`/updateFood`, updatedFoodItem)
+          .then((res) => {
+            // console.log(res.data);
+            Swal.fire({
+              title: "Updated!",
+              text: "Food updated successfully.",
+              icon: "success",
+            }).then(() => {
+              navigate("/SingleFoodDetails", { state: updatedFoodItem });
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong.",
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
   return (

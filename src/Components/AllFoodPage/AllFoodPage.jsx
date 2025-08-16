@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
 import FoodItemSkeleton from "../../shared/FoodItemSkeleton/FoodItemSkeleton";
+import { useNavigate } from "react-router-dom";
 
 /** Inline icons (to avoid lucide-react import errors) */
 const Search = ({ className = "" }) => (
@@ -50,6 +51,7 @@ const AllFoodPage = () => {
   const [priceRange, setPriceRange] = useState([0, 99999]);
   const [calorieRange, setCalorieRange] = useState([0, 99999]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const axiosSecure = useAxiousSecure();
 
@@ -86,7 +88,9 @@ const AllFoodPage = () => {
   }, [allFood, searchTerm, category, type, priceRange, calorieRange]);
 
   const handleDeleteFood = (id) => {
-    console.log(id);
+    if (!user) {
+      return navigate("/login");
+    }
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",
@@ -125,7 +129,7 @@ const AllFoodPage = () => {
                 text: "Something Wrong",
                 icon: "error",
               });
-              console.log(e);
+              // console.log(e);
             });
         } else if (
           /* Read more about handling dismissals below */
@@ -141,6 +145,9 @@ const AllFoodPage = () => {
   };
 
   const handleAddCard = (id) => {
+    if (!user) {
+      return navigate("/login");
+    }
     const data = {
       email: user.email,
       foodId: id,

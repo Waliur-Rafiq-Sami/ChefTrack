@@ -32,7 +32,7 @@ const Registration = () => {
 
     createUserUseEmailAndPass(email, password)
       .then((result) => {
-        console.log(result.user.email);
+        // console.log(result.user.email);
         if (result.user.email) {
           SwalAlart({
             type: 1,
@@ -46,7 +46,7 @@ const Registration = () => {
         axiosSecure
           .put("/profile", value) // changed to POST to match backend
           .then((res) => {
-            console.log("Response: ", res.data);
+            // console.log("Response: ", res.data);
           })
           .catch((err) => console.log(err));
       })
@@ -64,7 +64,7 @@ const Registration = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user.email);
+        // console.log(result.user.email);
         if (result.user.email) {
           SwalAlart({
             type: 1,

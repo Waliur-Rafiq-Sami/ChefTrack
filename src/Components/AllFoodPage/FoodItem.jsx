@@ -33,17 +33,27 @@ const FoodItem = ({ food, handleDeleteFood, handleAddCard }) => {
           ★ Expansive
         </div>
       )}
-      {/* Discount Badge - Premium & Eye-catching */}
-      {food?.Discount > 0 && (
-        <div className="absolute -top-2 -right-10 text-white text-xs font-bold px-3 py-1">
+      {/* Discount Badge */}
+      {food.Discount > 0 && (
+        <div className="absolute top-3 right-3 z-20">
           <div className="relative">
-            <img src={discountIcon} className="w-18" alt="" />
-            <p className="absolute top-2 right-6 text-[14px]">
-              {food.Discount}
-            </p>
+            {/* Glowing background behind the badge */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-pink-500 to-yellow-500 opacity-60 filter blur-md animate-pulse"></div>
+
+            {/* Badge Container with colorful gradient */}
+            <div
+              className="relative flex items-center justify-center 
+                      bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-400 
+                      rounded-full shadow-lg px-3 py-1 animate-bounce"
+            >
+              <span className="text-white font-bold text-sm drop-shadow-lg">
+                {food.Discount}% OFF
+              </span>
+            </div>
           </div>
         </div>
       )}
+
       {/* Food Image */}
       <img
         className="w-full h-60 object-cover rounded-xl shadow-md"

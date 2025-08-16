@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../Img/login_reg/img.png";
 import { useContext } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
 import SwalAlart from "../../shared/SwalAllart/SwalAlart";
 const Login = () => {
   const { signInWithEmailAndPass, signInWithGoogle } = useContext(AuthProvider);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  // console.log(location.state?.from);
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+
     signInWithEmailAndPass(email, password)
       .then((r) => {
         if (r.user) {
@@ -20,11 +25,11 @@ const Login = () => {
             icon: "success",
           });
           form.reset();
+          navigate(from, { state: location.state?.from.state });
         }
-        console.log(r);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         SwalAlart({
           type: 1,
           title: "ERROR!!!",
@@ -37,7 +42,7 @@ const Login = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user.email);
+        // console.log(result.user.email);
         if (result.user.email) {
           SwalAlart({
             type: 1,
@@ -45,6 +50,7 @@ const Login = () => {
             text: "You're In! 🎉",
             icon: "success",
           });
+          navigate(from, { state: location.state?.from.state });
         }
       })
       .catch((err) => {

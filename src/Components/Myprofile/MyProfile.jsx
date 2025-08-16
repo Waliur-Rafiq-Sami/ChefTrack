@@ -1,11 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
 import useAxiousSecure from "../../Hook/useAxiousSecure";
+import Swal from "sweetalert2";
 
 const MyProfile = () => {
   const { user, logOut, myProfile } = useContext(AuthProvider);
   const [isEditing, setIsEditing] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
   const axiosSecure = useAxiousSecure();
+
+  const [initialFormData, setInitialFormData] = useState({});
   const [formData, setFormData] = useState({
     displayName: "",
     email: "",
@@ -14,23 +18,10 @@ const MyProfile = () => {
     address: "",
   });
 
+  // Initialize form data
   useEffect(() => {
     if (user?.email && myProfile?.email) {
-      // axiosSecure.get(`/profile/${user.email}`).then((r) => {
-      //   const profile = r.data || {};
-      //   console.log("Fetched Profile Data:", profile);
-      //   setFormData({
-      //     displayName: profile.displayName || user.displayName || "",
-      //     email: profile.email || user.email || "",
-      //     phone: profile.phone || "",
-      //     photoURL:
-      //       profile.photoURL ||
-      //       user.photoURL ||
-      //       "https://i.ibb.co/4pDNDk1/avatar.png",
-      //     address: profile.address || "",
-      //   });
-      // });
-      setFormData({
+      const initialData = {
         displayName: myProfile.displayName || user.displayName || "",
         email: myProfile.email || user.email || "",
         phone: myProfile.phone || "",
@@ -39,9 +30,20 @@ const MyProfile = () => {
           user.photoURL ||
           "https://i.ibb.co/4pDNDk1/avatar.png",
         address: myProfile.address || "",
-      });
+      };
+      setFormData(initialData);
+      setInitialFormData(initialData);
+      setIsChanged(false);
     }
-  }, [user, axiosSecure, myProfile]);
+  }, [user, myProfile]);
+
+  // Detect changes
+  useEffect(() => {
+    const changed = Object.keys(formData).some(
+      (key) => formData[key] !== initialFormData[key]
+    );
+    setIsChanged(changed);
+  }, [formData, initialFormData]);
 
   if (!user) {
     return (
@@ -60,40 +62,51 @@ const MyProfile = () => {
   };
 
   const handleSave = () => {
-    console.log("Saving data:", formData);
-    axiosSecure
-      .put("/profile", formData)
-      .then((res) => {
-        console.log("Response: ", res.data);
-        setIsEditing(false);
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to save changes to your profile?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, save it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .put("/profile", formData)
+          .then(() => {
+            // console.log("Response: ", res.data);
+            setIsEditing(false);
+            setInitialFormData(formData); // update initial data
+            setIsChanged(false); // reset change state
+            Swal.fire({
+              title: "Saved!",
+              text: "Your profile has been updated successfully.",
+              icon: "success",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong. Please try again.",
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    if (user?.email && myProfile?.email) {
-      setFormData({
-        displayName: myProfile.displayName || user.displayName || "",
-        email: myProfile.email || user.email || "",
-        phone: myProfile.phone || "",
-        photoURL:
-          myProfile.photoURL ||
-          user.photoURL ||
-          "https://i.ibb.co/4pDNDk1/avatar.png",
-        address: myProfile.address || "",
-      });
-    }
+    setFormData(initialFormData); // revert to initial values
+    setIsChanged(false);
   };
 
   const handleLogOut = () => {
     logOut()
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -102,7 +115,7 @@ const MyProfile = () => {
         {/* Profile Header */}
         <div className="flex flex-col items-center">
           <img
-            src={isEditing ? formData.photoURL : formData.photoURL || " "}
+            src={formData.photoURL || " "}
             alt="User Avatar"
             className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
           />
@@ -124,6 +137,7 @@ const MyProfile = () => {
             {user.role || "Information"}
           </span>
         </div>
+
         {/* User Info */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-4 md:col-span-2 bg-white rounded-xl shadow-md border border-gray-100">
@@ -165,23 +179,21 @@ const MyProfile = () => {
           <div className="p-4 bg-white rounded-xl shadow-md border border-gray-100">
             <h3 className="text-sm font-semibold text-gray-500">Email</h3>
             {isEditing ? (
-              <>
-                <div className="tooltip">
-                  <div className="tooltip-content bg-transparent">
-                    <div className="animate-bounce text-orange-400 -rotate-10 text-2xl font-black">
-                      Sorry!! Can't change.
-                    </div>
+              <div className="tooltip">
+                <div className="tooltip-content bg-transparent">
+                  <div className="animate-bounce text-orange-400 -rotate-10 text-2xl font-black">
+                    Sorry!! Can't change.
                   </div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    disabled
-                    readOnly
-                    className="w-full "
-                  />
                 </div>
-              </>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  disabled
+                  readOnly
+                  className="w-full "
+                />
+              </div>
             ) : (
               <p className="text-gray-800">{formData.email}</p>
             )}
@@ -223,13 +235,19 @@ const MyProfile = () => {
             )}
           </div>
         </div>
+
         {/* Action Buttons */}
         <div className="mt-8 flex justify-center gap-4">
           {isEditing ? (
             <>
               <button
                 onClick={handleSave}
-                className="px-5 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow transition-all"
+                disabled={!isChanged} // disable if no changes
+                className={`px-5 py-2 font-medium rounded-lg shadow transition-all ${
+                  isChanged
+                    ? "bg-green-500 hover:bg-green-600 text-white"
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                }`}
               >
                 Save
               </button>

@@ -83,7 +83,7 @@ const Navbar = () => {
       <li className="hover:underline hover:bg-white">
         {!loading &&
           (user ? (
-            <button className="btn" onClick={handleLogOut}>
+            <button className="" onClick={handleLogOut}>
               Logout
             </button>
           ) : (
@@ -148,19 +148,20 @@ const Navbar = () => {
             >
               <img src={shopping_card} alt="" />
             </NavLink> */}
-            <NavLink
-              to="/profile"
-              className="btn-sm  border p-1 md:p-[10.5px] border-gray-400 bg-gray-100 rounded-full text-sm md:text-1xl text-green-800 hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+            <a
+              href="tel:+1234567890" // Replace with the phone number you want to call
+              className="btn-sm border p-1 md:p-[10.5px] border-gray-400 bg-gray-100 rounded-full text-sm md:text-1xl text-green-800 hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
             >
               <FaPhoneFlip />
-            </NavLink>
+            </a>
+
             <NavLink
               to="/MyPurchasePage"
               className="relative btn-sm md:w-9 w-6 border p-1 border-gray-400 bg-gray-100 rounded-full hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
             >
               <img src={shopping_card} alt="" />
               <span className="outline-gray-300 shadow-2xl rounded-full border-green-400 absolute -top-3 -right-3 text-[#1136db] font-extrabold px-2">
-                {totalQuantity}
+                {user?.email ? totalQuantity : "0"}
               </span>
             </NavLink>
             {!loading &&
