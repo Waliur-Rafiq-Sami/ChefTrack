@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import SingleCard from "../SingleCard/SingleCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import GetDataUsingCondition from "../../Hook/GetDataUsingCondition";
+// import GetDataUsingCondition from "../../Hook/GetDataUsingCondition";
 import SingleCardSkeleton from "../../shared/SingleCardSkeleton/SingleCardSkeleton";
 
-const TopPicks = () => {
+const TopPicks = ({ topFood }) => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
-  const topFoodItems = GetDataUsingCondition("Top food", 6);
-
+  // const topFoodItems = GetDataUsingCondition("Top food", 6);
+  const topFoodItems = topFood;
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: -360, behavior: "smooth" });

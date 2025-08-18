@@ -11,6 +11,7 @@ const Registration = () => {
     signInWithEmailAndPass,
     signInWithGoogle,
   } = useContext(AuthProvider);
+
   const axiosSecure = useAxiousSecure();
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,13 +40,6 @@ const Registration = () => {
     createUserUseEmailAndPass(email, password)
       .then((result) => {
         if (result.user.email) {
-          SwalAlart({
-            type: 1,
-            title: "Success!",
-            text: "You're Registered! 🎉",
-            icon: "success",
-          });
-
           // Automatically sign in after registration
           signInWithEmailAndPass(email, password)
             .then(() => {
@@ -56,8 +50,17 @@ const Registration = () => {
 
           // Save profile to backend
           axiosSecure
-            .put("/profile", userData)
-            .then(() => {})
+            .post("/addNewUser", userData)
+            .then((r) => {
+              if (r.data.insertedId) {
+                SwalAlart({
+                  type: 1,
+                  title: "Success!",
+                  text: "You're Registered! 🎉",
+                  icon: "success",
+                });
+              }
+            })
             .catch((err) => console.log(err));
         }
       })
@@ -75,13 +78,35 @@ const Registration = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
+        const info = result.user;
+        const userData = {
+          displayName: info.displayName || "",
+          photoURL: info.photoURL || "",
+          phone: info.phoneNumber || "",
+          address: "",
+          email: info.email,
+        };
         if (result.user.email) {
-          SwalAlart({
-            type: 1,
-            title: "Success!",
-            text: "You're In! 🎉",
-            icon: "success",
-          });
+          // Save profile to backend
+          axiosSecure
+            .post("/addNewUser", userData)
+            .then((r) => {
+              // console.log(
+              //   "finding id : ",
+              //   r.data._id,
+              //   "\ninserted id : ",
+              //   r.data.insertedId
+              // );
+              if (r.data._id || r.data.insertedId) {
+                SwalAlart({
+                  type: 1,
+                  title: "Success!",
+                  text: "You're Registered! 🎉",
+                  icon: "success",
+                });
+              }
+            })
+            .catch((err) => console.log(err));
           navigate(from, { state: location.state?.from?.state });
         }
       })

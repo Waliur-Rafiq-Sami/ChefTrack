@@ -23,6 +23,7 @@ const MyPurchasePage = () => {
     setPurchases(res.data || []);
     setIsFetching(false);
   }, [axiosSecure, email]);
+
   const handleDelete = async (foodId) => {
     const result = await Swal.fire({
       title: "Are you sure?",

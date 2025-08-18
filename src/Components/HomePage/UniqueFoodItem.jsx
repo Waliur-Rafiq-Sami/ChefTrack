@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import GetDataUsingCondition from "./../../Hook/GetDataUsingCondition";
+// import GetDataUsingCondition from "./../../Hook/GetDataUsingCondition";
 import SingleCardSkeleton from "../../shared/SingleCardSkeleton/SingleCardSkeleton";
 
 // Single Food Card
@@ -48,7 +48,7 @@ const FoodCard = ({ food, navigate }) => {
 
       <div className="p-5 flex-col justify-between">
         <div>
-          <h2 className="md:text-2xl text-xl font-extrabold text-gray-900 leading-tight">
+          <h2 className="text-xl font-extrabold text-gray-900 leading-tight">
             {food.foodName}
           </h2>
           <p className="text-sm text-gray-500 mt-1">
@@ -75,12 +75,13 @@ const FoodCard = ({ food, navigate }) => {
 };
 
 // Unique Food Items Component
-const UniqueFoodItem = () => {
+const UniqueFoodItem = ({ unique }) => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
 
   // Get data using custom hook
-  const uniqueFoodItems = GetDataUsingCondition("Unique", 6);
+  // const uniqueFoodItems = GetDataUsingCondition("Unique", 6);
+  const uniqueFoodItems = unique;
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {

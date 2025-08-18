@@ -93,10 +93,10 @@ const ExpensiveFoodItem = ({ food, navigate }) => {
 };
 
 // Premium Food Section
-const PremiumFood = () => {
+const PremiumFood = ({ expansive }) => {
   const navigate = useNavigate();
-  const Expansive = GetDataUsingCondition("Expansive", 6);
-
+  // const Expansive = GetDataUsingCondition("Expansive", 6);
+  const Expansive = expansive;
   const scrollContainerRef = useRef(null);
 
   const scrollLeft = () => {

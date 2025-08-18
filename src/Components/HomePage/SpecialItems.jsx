@@ -3,26 +3,28 @@ import { useRef, useState, useEffect } from "react";
 import SingleCard from "../SingleCard/SingleCard";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import GetDataUsingCondition from "../../Hook/GetDataUsingCondition";
+// import GetDataUsingCondition from "../../Hook/GetDataUsingCondition";
 import SingleCardSkeleton from "../../shared/SingleCardSkeleton/SingleCardSkeleton";
 
-const SpecialItems = () => {
+const SpecialItems = ({ special }) => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [specialFoods, setSpecialFoods] = useState([]);
 
   // Get data with your hook
-  const fetchedFoods = GetDataUsingCondition("Special", 6);
+  // const SpecialFood = GetDataUsingCondition("Special", 6);
+
+  const SpecialFood = special;
 
   useEffect(() => {
-    if (fetchedFoods && fetchedFoods.length > 0) {
+    if (SpecialFood && SpecialFood.length > 0) {
       setSpecialFoods(
-        [...fetchedFoods].sort((a, b) => b.purchaseCount - a.purchaseCount)
+        [...SpecialFood].sort((a, b) => b.purchaseCount - a.purchaseCount)
       );
       setLoading(false);
     }
-  }, [fetchedFoods]);
+  }, [SpecialFood]);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {

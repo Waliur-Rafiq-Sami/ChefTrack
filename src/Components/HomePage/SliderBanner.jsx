@@ -13,6 +13,7 @@ import img3 from "../../Img/Banner/img3.jpg";
 import img4 from "../../Img/Banner/img4.jpg";
 import img5 from "../../Img/Banner/img5.jpg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 // Slider content
 const slides = [
@@ -114,9 +115,11 @@ const SliderBanner = () => {
                     {slide.subtext}
                   </p>
                   <div className="text-center md:text-left">
-                    <button className="px-5 py-2 sm:px-6 sm:py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full shadow-lg transition duration-300">
-                      Order Now
-                    </button>
+                    <Link to={"/foods"}>
+                      <button className="px-5 py-2 sm:px-6 sm:py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full shadow-lg transition duration-300">
+                        View All
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -139,7 +142,8 @@ const SliderBanner = () => {
             left: 50% !important;
             transform: translateX(-50%);
             width: 80% !important;
-            max-width: 400px;
+            max-width: 4import { Link } from 'react-router-dom';
+00px;
             --swiper-theme-color: #FACC15;
             --swiper-pagination-progressbar-height: 4px;
             background: rgba(255, 255, 255, 0.3);

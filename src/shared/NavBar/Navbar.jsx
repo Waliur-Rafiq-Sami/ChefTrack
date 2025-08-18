@@ -12,7 +12,7 @@ import useTotalQuantity from "../../Hook/getTotalQuantity";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user, logOut, loading, update } = useContext(AuthProvider);
+  const { user, myProfile, logOut, loading, update } = useContext(AuthProvider);
   const totalQuantity = useTotalQuantity(update);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const closeSidebar = () => setIsSidebarOpen(false);
@@ -136,18 +136,6 @@ const Navbar = () => {
 
           {/* Right-side Button */}
           <div className="navbar-end md:gap-2 gap-1">
-            {/* <NavLink
-              to="/profile"
-              className="btn-sm w-9 border p-1 border-gray-400 bg-gray-100 rounded-full"
-            >
-              <img src={shopping_card} alt="" />
-            </NavLink>
-            <NavLink
-              to="/profile"
-              className="btn-sm w-9 border p-1 border-gray-400 bg-gray-100 rounded-full"
-            >
-              <img src={shopping_card} alt="" />
-            </NavLink> */}
             <a
               href="tel:+1234567890" // Replace with the phone number you want to call
               className="btn-sm border p-1 md:p-[10.5px] border-gray-400 bg-gray-100 rounded-full text-sm md:text-1xl text-green-800 hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
@@ -180,6 +168,18 @@ const Navbar = () => {
                       <span className="md:border-5 border-4 outline-1 outline-gray-300 shadow-2xl rounded-full border-green-400 absolute top-0 right-0"></span>
                     </NavLink>
                   </>
+                ) : myProfile?.photoURL ? (
+                  <NavLink
+                    to="/profile"
+                    className="relative btn-sm bg-gray-100 rounded-full text-md md:text-2xl hover:scale-108 ease-in-out duration-300 transform hover:bg-gray-200"
+                  >
+                    <img
+                      src={myProfile?.photoURL}
+                      alt="Profile"
+                      className="w-7 h-7 md:w-10 md:h-10 rounded-full object-cover border border-gray-300"
+                    />
+                    <span className="md:border-5 border-4 outline-1 outline-gray-300 shadow-2xl rounded-full border-green-400 absolute top-0 right-0"></span>
+                  </NavLink>
                 ) : (
                   <>
                     <NavLink

@@ -4,7 +4,7 @@ import useAxiousSecure from "../../Hook/useAxiousSecure";
 import Swal from "sweetalert2";
 
 const MyProfile = () => {
-  const { user, logOut, myProfile } = useContext(AuthProvider);
+  const { user, logOut } = useContext(AuthProvider);
   const [isEditing, setIsEditing] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
   const axiosSecure = useAxiousSecure();
@@ -20,22 +20,25 @@ const MyProfile = () => {
 
   // Initialize form data
   useEffect(() => {
-    if (user?.email && myProfile?.email) {
-      const initialData = {
-        displayName: myProfile.displayName || user.displayName || "",
-        email: myProfile.email || user.email || "",
-        phone: myProfile.phone || "",
-        photoURL:
-          myProfile.photoURL ||
-          user.photoURL ||
-          "https://i.ibb.co/4pDNDk1/avatar.png",
-        address: myProfile.address || "",
-      };
-      setFormData(initialData);
-      setInitialFormData(initialData);
-      setIsChanged(false);
-    }
-  }, [user, myProfile]);
+    axiosSecure
+      .get(`/profile/${user.email}`)
+      .then((r) => {
+        const initialData = {
+          displayName: r.data.displayName || "",
+          email: r.data.email || user.email || "",
+          phone: r.data.phone || "",
+          photoURL:
+            r.data.photoURL ||
+            user.data.photoURL ||
+            "https://i.ibb.co/4pDNDk1/avatar.png",
+          address: r.data.address || "",
+        };
+        setFormData(initialData);
+        setInitialFormData(initialData);
+        setIsChanged(false);
+      })
+      .catch((e) => console.log(e));
+  }, [user, axiosSecure]);
 
   // Detect changes
   useEffect(() => {
@@ -104,9 +107,36 @@ const MyProfile = () => {
   };
 
   const handleLogOut = () => {
-    logOut()
-      .then((result) => console.log(result))
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Are you sure ?",
+      text: "You'll need to sign in again to access your account.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logOut()
+          .then(() => {
+            Swal.fire({
+              title: "Logged Out!",
+              text: "You have been successfully logged out.",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false,
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "Oops!",
+              text: "Something went wrong while logging out.",
+              icon: "error",
+            });
+            console.error(err);
+          });
+      }
+    });
   };
 
   return (

@@ -3,12 +3,14 @@ import login from "../../Img/login_reg/img.png";
 import { useContext } from "react";
 import { AuthProvider } from "../../Auth/AuthContextProvider";
 import SwalAlart from "../../shared/SwalAllart/SwalAlart";
+import useAxiousSecure from "../../Hook/useAxiousSecure";
 const Login = () => {
   const { signInWithEmailAndPass, signInWithGoogle } = useContext(AuthProvider);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  // console.log(location.state?.from);
+  const axiosSecure = useAxiousSecure();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -29,7 +31,6 @@ const Login = () => {
         }
       })
       .catch(() => {
-        // console.log(err);
         SwalAlart({
           type: 1,
           title: "ERROR!!!",
@@ -42,15 +43,36 @@ const Login = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
-        // console.log(result.user.email);
+        const info = result.user;
+        const userData = {
+          displayName: info.displayName || "",
+          photoURL: info.photoURL || "",
+          phone: info.phoneNumber || "",
+          address: "",
+          email: info.email,
+        };
         if (result.user.email) {
-          SwalAlart({
-            type: 1,
-            title: "Success!",
-            text: "You're In! 🎉",
-            icon: "success",
-          });
-          navigate(from, { state: location.state?.from.state });
+          // Save profile to backend
+          axiosSecure
+            .post("/addNewUser", userData)
+            .then((r) => {
+              // console.log(
+              //   "finding id : ",
+              //   r.data._id,
+              //   "\ninserted id : ",
+              //   r.data.insertedId
+              // );
+              if (r.data._id || r.data.insertedId) {
+                SwalAlart({
+                  type: 1,
+                  title: "Success!",
+                  text: "You're In! 🎉",
+                  icon: "success",
+                });
+              }
+            })
+            .catch((err) => console.log(err));
+          navigate(from, { state: location.state?.from?.state });
         }
       })
       .catch((err) => {
@@ -62,6 +84,7 @@ const Login = () => {
         });
       });
   };
+
   return (
     <div className="flex items-center gap-5 justify-center mt-10 flex-col-reverse md:flex-row my-10 md:my-30">
       <div className="lg:w-1/3 w-full">

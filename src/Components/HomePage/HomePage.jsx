@@ -7,8 +7,42 @@ import CustomerReviews from "./CustomerReviews";
 import TopPicks from "./TopPicks";
 import TastTheEx from "./TastTheEx";
 import PremiumFood from "./PremiumFood";
+import { useEffect, useState } from "react";
+import useAxiousSecure from "../../Hook/useAxiousSecure";
 
 const HomePage = () => {
+  const [topFood, setTopFood] = useState([]);
+  const [special, setSpecial] = useState([]);
+  const [unique, setUnique] = useState([]);
+  const [expansive, setExpansive] = useState([]);
+  const axiousSecure = useAxiousSecure();
+
+  useEffect(() => {
+    let retryCount = 0;
+    const maxRetries = 3;
+    const retryDelay = 2000;
+
+    const fetchData = async () => {
+      try {
+        const res = await axiousSecure.get("/foodForHomePage");
+        setTopFood(res.data.r1);
+        setSpecial(res.data.r2);
+        setUnique(res.data.r3);
+        setExpansive(res.data.r4);
+      } catch (error) {
+        console.error(error);
+        if (retryCount < maxRetries) {
+          retryCount++;
+          console.log("Retrying..... ");
+          setTimeout(fetchData, retryDelay);
+        } else {
+          console.error("Failed");
+        }
+      }
+    };
+    fetchData();
+  }, [axiousSecure]);
+
   return (
     <>
       <div className="md:mx-5 mx-1">
@@ -28,7 +62,7 @@ const HomePage = () => {
           here.
         </p>
         <div className="mt-5">
-          <TopPicks></TopPicks>
+          <TopPicks topFood={topFood}></TopPicks>
         </div>
       </div>
 
@@ -46,12 +80,13 @@ const HomePage = () => {
           all the fuss is about.
         </p>
         <div className="mt-5">
-          <SpecialItems></SpecialItems>
+          <SpecialItems special={special}></SpecialItems>
         </div>
       </div>
 
       {/* Unique & Premium Food Intro */}
       <TastTheEx></TastTheEx>
+
       {/* Our unique food  */}
       <div className="md:mt-10">
         <h1 className="md:text-3xl text-xl mt-3 font-bold text-center">
@@ -63,7 +98,7 @@ const HomePage = () => {
           Imagine bold spices, unexpected textures, and perfectly balanced
           tastes that tell a story with every mouthful. Your adventure awaits.
         </p>
-        <UniqueFoodItem></UniqueFoodItem>
+        <UniqueFoodItem unique={unique}></UniqueFoodItem>
       </div>
 
       {/* Our Expancive food  */}
@@ -78,7 +113,7 @@ const HomePage = () => {
           and exclusivity. This isn’t just food — it’s a luxurious experience
           worth savoring.
         </p>
-        <PremiumFood></PremiumFood>
+        <PremiumFood expansive={expansive}></PremiumFood>
       </div>
 
       <div className="pb-10">
