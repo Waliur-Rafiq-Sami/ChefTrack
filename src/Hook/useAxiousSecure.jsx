@@ -2,9 +2,8 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const axiousSecure = axios.create({
-  // baseURL: "https://chef-track-server.vercel.app",
-
-  baseURL: "http://localhost:5000",
+  baseURL: "https://chef-track-server.vercel.app",
+  // baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 
